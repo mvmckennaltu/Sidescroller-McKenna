@@ -10,6 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isDoubleJumping = false;
     private Rigidbody2D rb2d;
     private float jumpForce;
+    public GameObject bullet;
+    public Transform shootPoint;
+    public float shootForce = 3.0f;
+    private int playerDirection = 1;
+    private float shootPosition;
+    public int lives;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +32,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             moveHorizontal = 1.0f;
+            playerDirection = 1;
+           
         }
         if (Input.GetKey(KeyCode.A))
         {
             moveHorizontal = -1.0f;
+            playerDirection = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            Shoot();
         }
 
         // Sets the velocity of the player rigidbody to moveHorizontal times their move speed
@@ -39,13 +52,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isAirborne)
             {
-                // Initial jump
                 rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isAirborne = true;
             }
             else if (!isDoubleJumping)
             {
-                // Double jump
                 rb2d.velocity = new Vector2(rb2d.velocity.x, 0); // Resets the player's vertical velocity before a jump
                 rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isDoubleJumping = true;
@@ -61,6 +72,32 @@ public class PlayerMovement : MonoBehaviour
             isDoubleJumping = false;
         }
     }
+    private void Shoot()
+    {
 
+        shootPosition = shootPoint.transform.position.x;
+        if (playerDirection == 0)
+        {
+            GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+            Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
+            shootPoint.transform.position = (new Vector2(-2, 0));
+            bulletRb.AddForce(Vector2.left * shootForce, ForceMode2D.Impulse);
+            if (shootPosition > -2)
+            {
+                shootPosition = -2;
+            }
+        }
+        if (playerDirection == 1)
+        {
+            GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+            Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
+            shootPoint.transform.position = (new Vector2(2, 0));
+            bulletRb.AddForce(Vector2.right * shootForce, ForceMode2D.Impulse);
+            if(shootPosition < 2)
+            {
+                shootPosition = 2;
+            }
+        }
+    }
  
 }
