@@ -16,12 +16,22 @@ public class PlayerMovement : MonoBehaviour
     private int playerDirection = 1;
     private float shootPosition;
     public int lives;
-
+    public AudioSource playerAudioSource;
+    public Transform lastCheckpoint;
+    public AudioClip [] jumpClipArray;
+    public AudioClip[] dJumpClipArray;
+    public AudioClip[] deathClipArray;
+    public AudioClip [] respawnClipArray;
+    public AudioClip victory;
+    public AudioClip defeatEnemy;
+    public AudioClip shoot;
+    public AudioClip gameOverClip;
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb2d.gravityScale));
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -99,5 +109,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
- 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Checkpoint"))
+        {
+            lastCheckpoint = other.transform;
+            Debug.Log("Checkpoint set");
+        }
+    }
+
 }
