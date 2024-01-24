@@ -20,7 +20,9 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 playerPosition = new Vector3(player.position.x, player.position.y + cameraHeight, -10);
         transform.position = Vector3.SmoothDamp(transform.position, playerPosition, ref velocity, scrollSpeed);
+        //Stops the camera from  unnecesarily rotating
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        //Prevents the camera from going too low
         if (cameraY.position.y < -10)
         {
             cameraY.position = new Vector3(cameraY.position.x, -8, cameraY.position.z);

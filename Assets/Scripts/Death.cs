@@ -19,7 +19,7 @@ public class Death : MonoBehaviour
     }
     void Update()
     {
-
+        //Updates the lives UI
         livesCountText.text = playerMovement.lives.ToString();
     }
 
@@ -33,6 +33,7 @@ public class Death : MonoBehaviour
         }
         if(other.CompareTag("Enemy"))
         {
+            //Kills the enemy if they fall in the pit
             Destroy(other.gameObject);
         }
     }
@@ -50,10 +51,10 @@ public class Death : MonoBehaviour
 
     IEnumerator TeleportAfterDelay(Transform playerTransform, Vector3 targetPosition)
     {
-        // Wait for some time (you can adjust the duration)
+        // Wait for some time
         yield return new WaitForSeconds(1.0f);
         playerMovement.rb2d.velocity = Vector2.zero;
-        // Move the player to the last checkpoint after the delay
+        // Move the player to the last checkpoint 
         playerTransform.position = targetPosition;
     }
     public void PlayerDeath()
