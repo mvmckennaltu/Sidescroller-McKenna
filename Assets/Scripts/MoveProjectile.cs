@@ -18,40 +18,34 @@ public class MoveProjectile : MonoBehaviour
             // Get the PlayerMovement component from the playerObject
             playerMovement = playerObject.GetComponent<PlayerMovement>();
         }
-
+        SetProjectileVelocity();
     }
 
-    void Update()
+
+    void SetProjectileVelocity()
     {
-       
-        //Update the projectile's velocity
         if (playerMovement.playerDirection == 1)
         {
             projectile.velocity = new Vector2(1, 0) * moveSpeed;
         }
         else
         {
-            projectile.velocity = new Vector2(-1,0)* moveSpeed;
+            projectile.velocity = new Vector2(-1, 0) * moveSpeed;
         }
     }
-
-    #region TODO 4
-    //Using your knowledge on CollisionEnters, write the function for OnCollisionEnter2D
-    //and implement a check for if the collision hits either a game object tagged with Enemy
-    //or a game object tagged with Top. If top, destroy this game object. If enemy, destroy both
-
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Enemy")
         {
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 20));
+            Destroy(gameObject);
             Destroy(col.gameObject);
         }
 
-        if (col.gameObject.tag == "Top")
-        {
-            Destroy(this.gameObject);
-        }
+
+
+       
     }
-    #endregion
+    
+    
 }

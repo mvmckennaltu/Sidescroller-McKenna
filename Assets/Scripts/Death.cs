@@ -1,9 +1,25 @@
 using System.Collections;
 using UnityEngine;
-
+using TMPro;
 public class Death : MonoBehaviour
 {
     private int pickedClip;
+    public TextMeshProUGUI livesCountText;
+    PlayerMovement playerMovement;
+    private void Start()
+    {
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            // Get the PlayerMovement component from the playerObject
+            playerMovement = playerObject.GetComponent<PlayerMovement>();
+        }
+    }
+    void Update()
+    {
+
+        livesCountText.text = playerMovement.lives.ToString();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {

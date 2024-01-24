@@ -13,9 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet;
     public Transform shootPoint;
     
-    public int playerDirection = 1;
+    public int playerDirection = 0;
     private float shootPosition;
-    public int lives;
+    public int lives = 5;
     public AudioSource playerAudioSource;
     public Transform lastCheckpoint;
     public AudioClip [] jumpClipArray;
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public Sprite normalSprite;
     public Sprite jumpSprite;
     private Transform playerRotation;
+    private int pickedClip;
+    public bool movementLocked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveHorizontal = 0.0f;
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !movementLocked)
         {
             moveHorizontal = 1.0f;
             playerDirection = 1;
@@ -54,14 +56,14 @@ public class PlayerMovement : MonoBehaviour
 
 
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !movementLocked)
         {
             moveHorizontal = -1.0f;
             playerDirection = 0;
             playerRotation.rotation = Quaternion.Euler(0,0,0);
             
         }
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.RightShift) && !movementLocked)
         {
             Shoot();
         }
@@ -71,17 +73,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            pickedClip = Random.Range(0, 2);
             if (!isAirborne)
             {
                 rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isAirborne = true;
                 playerSprite.sprite = jumpSprite;
+                playerAudioSource.PlayOneShot(jumpClipArray[pickedClip]);
             }
             else if (!isDoubleJumping)
             {
                 rb2d.velocity = new Vector2(rb2d.velocity.x, 0); // Resets the player's vertical velocity before a jump
                 rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isDoubleJumping = true;
+                playerAudioSource.PlayOneShot(dJumpClipArray[pickedClip]);
             }
         }
     }
@@ -101,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
         shootPosition = shootPoint.transform.position.x;
         GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
         Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
+        playerAudioSource.PlayOneShot(shoot);
             
             
 
