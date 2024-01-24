@@ -8,6 +8,7 @@ TagManager:
   - Checkpoint
   - Enemy
   - Platform Edge
+  - Death Barrier
   layers:
   - Default
   - TransparentFX

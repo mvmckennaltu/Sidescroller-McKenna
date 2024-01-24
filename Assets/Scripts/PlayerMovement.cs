@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5.0f;
     public bool isAirborne = false;
     private bool isDoubleJumping = false;
-    private Rigidbody2D rb2d;
+    public Rigidbody2D rb2d;
     private float jumpForce;
     public GameObject bullet;
     public Transform shootPoint;

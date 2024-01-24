@@ -14,11 +14,11 @@ public class EnemyDirectionChange : MonoBehaviour
         if (!collision.CompareTag("Ground"))
         {
             Debug.Log("Enemy detected something that isn't the ground");
-            if(enemyBehavior.enemyDirection == 1)
+            if (enemyBehavior.enemyDirection == 1)
             {
                 enemyBehavior.enemyDirection = 0;
             }
-            if (enemyBehavior.enemyDirection == 0)
+            else if (enemyBehavior.enemyDirection == 0)
             {
                 enemyBehavior.enemyDirection = 1;
             }
