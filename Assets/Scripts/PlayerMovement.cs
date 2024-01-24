@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce;
     public GameObject bullet;
     public Transform shootPoint;
-    public float shootForce = 3.0f;
-    private int playerDirection = 1;
+    
+    public int playerDirection = 1;
     private float shootPosition;
     public int lives;
     public AudioSource playerAudioSource;
@@ -26,12 +26,18 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip defeatEnemy;
     public AudioClip shoot;
     public AudioClip gameOverClip;
+    private SpriteRenderer playerSprite;
+    public Sprite normalSprite;
+    public Sprite jumpSprite;
+    private Transform playerRotation;
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb2d.gravityScale));
         playerAudioSource = GetComponent<AudioSource>();
+        playerSprite = GetComponent<SpriteRenderer>();
+        playerRotation = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -43,12 +49,17 @@ public class PlayerMovement : MonoBehaviour
         {
             moveHorizontal = 1.0f;
             playerDirection = 1;
-           
+            playerRotation.rotation = Quaternion.Euler(0, 180, 0);
+
+
+
         }
         if (Input.GetKey(KeyCode.A))
         {
             moveHorizontal = -1.0f;
             playerDirection = 0;
+            playerRotation.rotation = Quaternion.Euler(0,0,0);
+            
         }
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
@@ -64,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isAirborne = true;
+                playerSprite.sprite = jumpSprite;
             }
             else if (!isDoubleJumping)
             {
@@ -80,34 +92,20 @@ public class PlayerMovement : MonoBehaviour
         {
             isAirborne = false;
             isDoubleJumping = false;
+            playerSprite.sprite = normalSprite;
         }
     }
     private void Shoot()
     {
 
         shootPosition = shootPoint.transform.position.x;
-        if (playerDirection == 0)
-        {
-            GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
-            Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
-            shootPoint.transform.position = (new Vector2(-2, 0));
-            bulletRb.AddForce(Vector2.left * shootForce, ForceMode2D.Impulse);
-            if (shootPosition > -2)
-            {
-                shootPosition = -2;
-            }
-        }
-        if (playerDirection == 1)
-        {
-            GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
-            Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
-            shootPoint.transform.position = (new Vector2(2, 0));
-            bulletRb.AddForce(Vector2.right * shootForce, ForceMode2D.Impulse);
-            if(shootPosition < 2)
-            {
-                shootPosition = 2;
-            }
-        }
+        GameObject newProjectile = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+        Rigidbody2D bulletRb = newProjectile.GetComponent<Rigidbody2D>();
+            
+            
+
+        
+          
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
