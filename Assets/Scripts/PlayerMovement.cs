@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public float jumpHeight = 5.0f;
@@ -120,6 +120,23 @@ public class PlayerMovement : MonoBehaviour
             lastCheckpoint = other.transform;
             Debug.Log("Checkpoint set");
         }
+        if(other.CompareTag("Goal"))
+        {
+            movementLocked = true;
+            playerAudioSource.PlayOneShot(victory);
+            StartCoroutine(WaitForAudioClip(playerAudioSource));
+            SceneManager.LoadScene("Victory");
+        }
+        
     }
+    IEnumerator WaitForAudioClip(AudioSource audioSource)
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
 
+        // Code here will execute after the audio clip has finished playing
+        Debug.Log("Audio clip has finished playing!");
+    }
 }

@@ -41,10 +41,14 @@ public class MoveProjectile : MonoBehaviour
             Destroy(gameObject);
             Destroy(col.gameObject);
         }
+        if (col.gameObject.tag == "Ground")
+        {
+            Destroy(gameObject);
+          
+        }
 
 
 
-       
     }
     
     

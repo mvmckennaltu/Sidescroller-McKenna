@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class Death : MonoBehaviour
 {
     private int pickedClip;
@@ -28,6 +29,11 @@ public class Death : MonoBehaviour
         {
             Transform playerTransform = other.transform;
             PlayerDeath();
+
+        }
+        if(other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
         }
     }
 
@@ -73,6 +79,7 @@ public class Death : MonoBehaviour
             {
                 playerMovement.playerAudioSource.PlayOneShot(playerMovement.gameOverClip);
                 StartCoroutine(WaitForAudioClip(playerMovement.playerAudioSource));
+                SceneManager.LoadScene("GameOver");
             }
         }
     }

@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 5119566670285839535}
   - component: {fileID: 5119566670285839533}
   - component: {fileID: -7647700559331494366}
+  - component: {fileID: 595284859857482203}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -459,3 +460,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7715311, y: 0.785378}
   m_EdgeRadius: 0
+--- !u!114 &595284859857482203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5119566670285839532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d0e21039ab54949af6a46b422f130c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

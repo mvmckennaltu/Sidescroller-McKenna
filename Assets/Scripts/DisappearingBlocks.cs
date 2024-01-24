@@ -5,7 +5,7 @@ public class DisappearingBlocks : MonoBehaviour
 {
     public float setTime = 10.0f;
     public GameObject block;
-
+    public AudioClip switchClip;
     void Update()
     {
         // Check if the timer is greater than zero before subtracting Time.deltaTime
@@ -35,6 +35,8 @@ public class DisappearingBlocks : MonoBehaviour
         {
             // Toggle the enabled state of the SpriteRenderer
             spriteRenderer.enabled = !spriteRenderer.enabled;
+            AudioSource.PlayClipAtPoint(switchClip,block.transform.position);
+
         }
 
         // Get the Collider2D component

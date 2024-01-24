@@ -7,6 +7,7 @@ public class Pause : MonoBehaviour
     public GameObject pauseText;
     public GameObject mainMenuButton;
     public GameObject resumeButton;
+    public GameObject exitButton;
     public static bool gameIsPaused = false;
     // Start is called before the first frame update
     private void Update()
@@ -27,13 +28,13 @@ public class Pause : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0.0f;
-        pauseText.SetActive(true); mainMenuButton.SetActive(true); resumeButton.SetActive(true);
+        pauseText.SetActive(true); mainMenuButton.SetActive(true); resumeButton.SetActive(true); exitButton.SetActive(true);
         gameIsPaused = true;
     }
     public void UnpauseGame()
     {
         Time.timeScale = 1.0f;
-        pauseText.SetActive(false); mainMenuButton.SetActive(false); resumeButton.SetActive(false);
+        pauseText.SetActive(false); mainMenuButton.SetActive(false); resumeButton.SetActive(false); exitButton.SetActive(false);
         gameIsPaused = false;
     }
 }

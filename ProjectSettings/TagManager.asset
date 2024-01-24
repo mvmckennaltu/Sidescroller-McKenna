@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Platform Edge
   - Death Barrier
+  - Goal
   layers:
   - Default
   - TransparentFX
